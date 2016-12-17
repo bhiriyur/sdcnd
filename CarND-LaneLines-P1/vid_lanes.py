@@ -69,12 +69,9 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=3):
         for x1,y1,x2,y2 in line:
             cv2.line(img, (x1, y1), (x2, y2), color, thickness)
 
-def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
-    """
-    `img` should be the output of a Canny transform.
-        
-    Returns an image with hough lines drawn.
-    """
+def hough_lines(img, rho, theta, threshold):
+    """ Returns the hough lines"""
+    
     # Returns (rho,theta) pairs, Using a multiscale hough-transform
     lines  = cv2.HoughLines( img, rho, theta, threshold, np.array([]),1,5).squeeze()
 
@@ -85,9 +82,17 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
             discard.append(i)
 
     np.delete(lines,discard)
-    
+
+
+def hough_linesP(img, rho, theta, threshold, min_line_len, max_line_gap):
+    """
+    `img` should be the output of a Canny transform.
+        
+    Returns an image with hough lines drawn.
+    """   
     # Returns (x1,y1), (x2,y2) quadruplets
-    linesp = cv2.HoughLinesP(img, rho, theta, threshold, np.array([]), minLineLength=min_line_len, maxLineGap=max_line_gap)
+    linesp = cv2.HoughLinesP(img, rho, theta, threshold, np.array([]),
+                             minLineLength=min_line_len, maxLineGap=max_line_gap).squeeze()
 
     # Discard Horizontal lines (or close to horizontal)
     discard = []
@@ -233,6 +238,6 @@ if __name__ == '__main__':
     img_pre   = mpimg.imread(test_file)
     img_post  = process_image(img_pre)
 
-    #process_video("solidWhiteRight.mp4")
+    process_video("solidWhiteRight.mp4")
     process_video("solidYellowLeft.mp4")
     process_video("challenge.mp4")
