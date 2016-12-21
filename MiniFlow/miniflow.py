@@ -153,8 +153,9 @@ class Sigmoid(Layer):
             
             NOTE: See the Linear layer and MSE layer for examples.
             """
-
-
+            S = self.value
+            self.gradients[self.inbound_layers[0]] += grad_cost*S*(1-S)
+            
 class MSE(Layer):
     def __init__(self, y, a):
         """
