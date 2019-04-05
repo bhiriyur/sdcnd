@@ -3,7 +3,7 @@ click==6.7
 cycler==0.10.0
 enum-compat==0.0.2
 eventlet==0.20.1
-Flask==0.12
+flask>=0.12.3
 greenlet==0.4.12
 h5py==2.6.0
 itsdangerous==0.24
